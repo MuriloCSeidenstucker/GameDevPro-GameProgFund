@@ -7,15 +7,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Vector3 targetPosition = transform.position;
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * horizontalSpeed;
+            targetPosition += Vector3.left * horizontalSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * horizontalSpeed;
+            targetPosition += Vector3.right * horizontalSpeed;
         }
 
-        transform.position += Vector3.forward * forwardSpeed;
+        targetPosition += Vector3.forward * forwardSpeed;
+
+        transform.position = targetPosition;
     }
 }
