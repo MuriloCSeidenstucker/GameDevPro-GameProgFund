@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour
         Vector3 targetPosition = transform.position;
         if (Input.GetKey(KeyCode.A))
         {
-            targetPosition += Vector3.left * horizontalSpeed;
+            targetPosition += Vector3.left * horizontalSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            targetPosition += Vector3.right * horizontalSpeed;
+            targetPosition += Vector3.right * horizontalSpeed * Time.deltaTime;
         }
 
-        targetPosition += Vector3.forward * forwardSpeed;
+        targetPosition += Vector3.forward * forwardSpeed * Time.deltaTime;
 
         transform.position = targetPosition;
     }
