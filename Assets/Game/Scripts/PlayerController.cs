@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float horizontalSpeed = 0.03f;
+    [SerializeField] private float forwardSpeed = 0.1f;
 
     private void Update()
     {
@@ -14,5 +15,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.right * horizontalSpeed;
         }
+
+        transform.position += Vector3.forward * forwardSpeed;
     }
 }
