@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private void Start()
-    {
-        Debug.Log("Start");
-    }
+    [SerializeField] private float horizontalSpeed = 0.03f;
 
     private void Update()
     {
-        Debug.Log("Update");
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position = transform.position + new Vector3(-horizontalSpeed, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.position = transform.position + new Vector3(horizontalSpeed, 0, 0);
+        }
     }
 }
