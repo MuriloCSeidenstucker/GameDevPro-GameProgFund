@@ -4,21 +4,26 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float horizontalSpeed = 0.03f;
     [SerializeField] private float forwardSpeed = 0.1f;
+    [SerializeField] private float laneDistance = 2f;
+
+    private float targetPositionX;
 
     private void Update()
     {
-        Vector3 targetPosition = transform.position;
-        if (Input.GetKey(KeyCode.A))
+        Vector3 currentPosition = transform.position;
+
+        if (Input.GetKeyDown(KeyCode.A) && targetPositionX >= 0)
         {
-            targetPosition += Vector3.left * horizontalSpeed * Time.deltaTime;
+            targetPositionX -= laneDistance;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && targetPositionX <= 0)
         {
-            targetPosition += Vector3.right * horizontalSpeed * Time.deltaTime;
+            targetPositionX += laneDistance;
         }
 
-        targetPosition += Vector3.forward * forwardSpeed * Time.deltaTime;
+        currentPosition.x = Mathf.Lerp(currentPosition.x, targetPositionX, horizontalSpeed*Time.deltaTime);
+        currentPosition += Vector3.forward * forwardSpeed * Time.deltaTime;
 
-        transform.position = targetPosition;
+        transform.position = currentPosition;
     }
 }
