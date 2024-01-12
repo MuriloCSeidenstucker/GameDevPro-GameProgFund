@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isJumping;
-    private float initialJumpPositionZ;
+    private float jumpStartZ;
     private float targetPositionX;
 
     private float LeftLaneX => initialPosition.x - laneDistanceX;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && !isJumping)
         {
             isJumping = true;
-            initialJumpPositionZ = transform.position.z;
+            jumpStartZ = transform.position.z;
         }
 
         targetPositionX = Mathf.Clamp(targetPositionX, LeftLaneX, RightLaneX);
@@ -71,15 +71,17 @@ public class PlayerController : MonoBehaviour
         float deltaY = 0f;
         if (isJumping)
         {
-            float currentJumpProgress = transform.position.z - initialJumpPositionZ;
-            float jumpPercent = currentJumpProgress / jumpDistanceZ;
+            float jumpCurrentProgress = transform.position.z - jumpStartZ;
+            float jumpPercent = jumpCurrentProgress / jumpDistanceZ;
             if (jumpPercent >= 1)
             {
                 isJumping = false;
             }
-            deltaY = Mathf.Sin(Mathf.PI * jumpPercent) * jumpHeightY;
+            else
+            {
+                deltaY = Mathf.Sin(Mathf.PI * jumpPercent) * jumpHeightY;
+            }
         }
-
-        return deltaY;
+        return initialPosition.y + deltaY;
     }
 }
