@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         initialPosition = transform.position;
+        enabled = false;
     }
 
     private void Update()

@@ -16,4 +16,9 @@ public class PlayerAnimationController : MonoBehaviour
     {
         animator.SetBool("IsJumping", player.IsJumping);
     }
+
+    public void StartRun()
+    {
+        animator.SetTrigger(PlayerAnimationConstants.StartRun);
+    }
 }
