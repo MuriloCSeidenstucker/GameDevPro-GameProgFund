@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool IsJumping { get; private set; }
+    public float JumpDuration => jumpDistanceZ / forwardSpeed;
 
     [SerializeField] private float horizontalSpeed = 15f;
     [SerializeField] private float forwardSpeed = 10f;
