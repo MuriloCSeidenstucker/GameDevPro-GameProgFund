@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool IsJumping { get; private set; }
+
     [SerializeField] private float horizontalSpeed = 15f;
     [SerializeField] private float forwardSpeed = 10f;
     [SerializeField] private float laneDistanceX = 1.5f;
@@ -12,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeightY = 2f;
 
     private Vector3 initialPosition;
-    private bool isJumping;
     private float jumpStartZ;
     private float targetPositionX;
 
@@ -47,9 +48,9 @@ public class PlayerController : MonoBehaviour
         {
             targetPositionX += laneDistanceX;
         }
-        if (Input.GetKeyDown(KeyCode.W) && !isJumping)
+        if (Input.GetKeyDown(KeyCode.W) && !IsJumping)
         {
-            isJumping = true;
+            IsJumping = true;
             jumpStartZ = transform.position.z;
         }
 
@@ -69,13 +70,13 @@ public class PlayerController : MonoBehaviour
     private float ProcessJump()
     {
         float deltaY = 0f;
-        if (isJumping)
+        if (IsJumping)
         {
             float jumpCurrentProgress = transform.position.z - jumpStartZ;
             float jumpPercent = jumpCurrentProgress / jumpDistanceZ;
             if (jumpPercent >= 1)
             {
-                isJumping = false;
+                IsJumping = false;
             }
             else
             {

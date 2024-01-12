@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 679536748}
   - component: {fileID: 679536745}
   - component: {fileID: 679536749}
+  - component: {fileID: 679536750}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -510,6 +511,19 @@ MonoBehaviour:
   laneDistanceX: 1.5
   jumpDistanceZ: 5
   jumpHeightY: 2
+--- !u!114 &679536750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679536743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa8a4b819bd8be4f9c03e3ebcaf9aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 801155631}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +831,11 @@ Transform:
 --- !u!4 &801155630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 91e4778cdfb185d4d9bfe81556dc4333, type: 3}
+  m_PrefabInstance: {fileID: 2139951133}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &801155631 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 91e4778cdfb185d4d9bfe81556dc4333, type: 3}
   m_PrefabInstance: {fileID: 2139951133}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
