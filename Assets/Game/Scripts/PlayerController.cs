@@ -87,4 +87,9 @@ public class PlayerController : MonoBehaviour
         }
         return initialPosition.y + deltaY;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"Entrando no trigger -> {other.name}");
+    }
 }
