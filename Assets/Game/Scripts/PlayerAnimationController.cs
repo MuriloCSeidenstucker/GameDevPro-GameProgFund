@@ -21,4 +21,9 @@ public class PlayerAnimationController : MonoBehaviour
     {
         animator.SetTrigger(PlayerAnimationConstants.StartRun);
     }
+
+    public void OnPlayerDeath()
+    {
+        animator.SetTrigger(PlayerAnimationConstants.OnDeath);
+    }
 }

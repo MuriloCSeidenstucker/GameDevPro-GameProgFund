@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 initialPosition;
     private float jumpStartZ;
     private float targetPositionX;
+    private bool isDead;
 
     private float LeftLaneX => initialPosition.x - laneDistanceX;
     private float RightLaneX => initialPosition.x + laneDistanceX;
@@ -29,7 +30,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        ProcessInput();
+        if (!isDead)
+        {
+            ProcessInput();
+        }
 
         Vector3 currentPosition = transform.position;
 
@@ -86,5 +90,12 @@ public class PlayerController : MonoBehaviour
             }
         }
         return initialPosition.y + deltaY;
+    }
+
+    public void OnPlayerDeath()
+    {
+        isDead = true;
+        forwardSpeed = 0f;
+        horizontalSpeed = 0f;
     }
 }
