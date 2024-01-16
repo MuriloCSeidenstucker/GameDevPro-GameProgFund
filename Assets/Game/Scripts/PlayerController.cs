@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool IsDead { get; private set; }
     public bool IsJumping { get; private set; }
+    public bool IsRolling { get; private set; }
     public float JumpDuration => jumpDistanceZ / forwardSpeed;
+    public float RollDuration => rollDistanceZ / forwardSpeed;
 
     [SerializeField] private float horizontalSpeed = 15f;
     [SerializeField] private float forwardSpeed = 10f;
@@ -13,11 +16,17 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpDistanceZ = 5f;
     [SerializeField] private float jumpHeightY = 2f;
+    [SerializeField] private float jumpCancelSpeed = 10f;
+
+    [Header("Roll")]
+    [SerializeField] private Collider regularCollider;
+    [SerializeField] private Collider rollCollider;
+    [SerializeField] private float rollDistanceZ = 2f;
 
     private Vector3 initialPosition;
     private float jumpStartZ;
+    private float rollStartZ;
     private float targetPositionX;
-    private bool isDead;
 
     private float LeftLaneX => initialPosition.x - laneDistanceX;
     private float RightLaneX => initialPosition.x + laneDistanceX;
@@ -25,12 +34,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         initialPosition = transform.position;
+        regularCollider.enabled = true;
+        rollCollider.enabled = false;
         enabled = false;
     }
 
     private void Update()
     {
-        if (!isDead)
+        if (!IsDead)
         {
             ProcessInput();
         }
@@ -38,8 +49,10 @@ public class PlayerController : MonoBehaviour
         Vector3 currentPosition = transform.position;
 
         currentPosition.x = ProcessLaneMovement();
-        currentPosition.y = ProcessJump();
+        currentPosition.y = IsJumping ? ProcessJump() : Mathf.Lerp(currentPosition.y, initialPosition.y, jumpCancelSpeed*Time.deltaTime);
         currentPosition.z = ProcessForwardMovement();
+
+        ProcessRoll();
 
         transform.position = currentPosition;
     }
@@ -57,7 +70,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && !IsJumping)
         {
             IsJumping = true;
+            IsRolling = false;
+            regularCollider.enabled = true;
+            rollCollider.enabled = false;
             jumpStartZ = transform.position.z;
+        }
+        if (Input.GetKeyDown(KeyCode.S) && !IsRolling)
+        {
+            IsRolling = true;
+            IsJumping = false;
+            regularCollider.enabled = false;
+            rollCollider.enabled = true;
+            rollStartZ = transform.position.z;
         }
 
         targetPositionX = Mathf.Clamp(targetPositionX, LeftLaneX, RightLaneX);
@@ -92,9 +116,24 @@ public class PlayerController : MonoBehaviour
         return initialPosition.y + deltaY;
     }
 
+    private void ProcessRoll()
+    {
+        if (IsRolling)
+        {
+            float rollCurrentProgress = transform.position.z - rollStartZ;
+            float rollPercent = rollCurrentProgress / rollDistanceZ;
+            if (rollPercent >= 1)
+            {
+                IsRolling = false;
+                regularCollider.enabled = true;
+                rollCollider.enabled = false;
+            }
+        }
+    }
+
     public void OnPlayerDeath()
     {
-        isDead = true;
+        IsDead = true;
         forwardSpeed = 0f;
         horizontalSpeed = 0f;
     }

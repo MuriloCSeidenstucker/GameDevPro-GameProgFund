@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private PlayerAnimationController animator;
+    [SerializeField] private PlayerAnimationController animController;
     private PlayerController player;
 
     private void Awake()
@@ -17,9 +17,9 @@ public class PlayerCollision : MonoBehaviour
         if (obstacle != null && player != null)
         {
             player.OnPlayerDeath();
-            if (animator != null)
+            if (animController != null)
             {
-                animator.OnPlayerDeath();
+                animController.OnPlayerDeath();
             }
             Debug.Log($"Jogador colidiu com: {obstacle.name} e morreu");
         }
