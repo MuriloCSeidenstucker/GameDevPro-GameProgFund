@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerAnimationController animController;
+    [SerializeField] private GameMode gameMode;
     private PlayerController player;
 
     private void Awake()
@@ -21,7 +22,7 @@ public class PlayerCollision : MonoBehaviour
             {
                 animController.OnPlayerDeath();
             }
-            Debug.Log($"Jogador colidiu com: {obstacle.name} e morreu");
+            gameMode.OnGameOver();
         }
     }
 }

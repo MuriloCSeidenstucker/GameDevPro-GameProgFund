@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         IsDead = true;
         forwardSpeed = 0f;
-        horizontalSpeed = 0f;
+        StopRoll();
+        StopJump();
     }
 }
