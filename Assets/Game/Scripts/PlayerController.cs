@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpDistanceZ = 5f;
     [SerializeField] private float jumpHeightY = 2f;
-    [SerializeField] private float jumpCancelSpeed = 10f;
+    [SerializeField] private float jumpLerpSpeed = 10f;
 
     [Header("Roll")]
     [SerializeField] private Collider regularCollider;
@@ -34,8 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         initialPosition = transform.position;
-        regularCollider.enabled = true;
-        rollCollider.enabled = false;
+        StopRoll();
         enabled = false;
     }
 
@@ -49,9 +48,8 @@ public class PlayerController : MonoBehaviour
         Vector3 currentPosition = transform.position;
 
         currentPosition.x = ProcessLaneMovement();
-        currentPosition.y = IsJumping ? ProcessJump() : Mathf.Lerp(currentPosition.y, initialPosition.y, jumpCancelSpeed*Time.deltaTime);
+        currentPosition.y = ProcessJump();
         currentPosition.z = ProcessForwardMovement();
-
         ProcessRoll();
 
         transform.position = currentPosition;
@@ -69,19 +67,11 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W) && !IsJumping)
         {
-            IsJumping = true;
-            IsRolling = false;
-            regularCollider.enabled = true;
-            rollCollider.enabled = false;
-            jumpStartZ = transform.position.z;
+            StartJump();
         }
         if (Input.GetKeyDown(KeyCode.S) && !IsRolling)
         {
-            IsRolling = true;
-            IsJumping = false;
-            regularCollider.enabled = false;
-            rollCollider.enabled = true;
-            rollStartZ = transform.position.z;
+            StartRoll();
         }
 
         targetPositionX = Mathf.Clamp(targetPositionX, LeftLaneX, RightLaneX);
@@ -97,6 +87,13 @@ public class PlayerController : MonoBehaviour
         return Mathf.Lerp(transform.position.x, targetPositionX, horizontalSpeed * Time.deltaTime);
     }
 
+    private void StartJump()
+    {
+        IsJumping = true;
+        jumpStartZ = transform.position.z;
+        StopRoll();
+    }
+
     private float ProcessJump()
     {
         float deltaY = 0f;
@@ -106,14 +103,30 @@ public class PlayerController : MonoBehaviour
             float jumpPercent = jumpCurrentProgress / jumpDistanceZ;
             if (jumpPercent >= 1)
             {
-                IsJumping = false;
+                StopJump();
             }
             else
             {
                 deltaY = Mathf.Sin(Mathf.PI * jumpPercent) * jumpHeightY;
             }
         }
-        return initialPosition.y + deltaY;
+
+        float targetPositionY = initialPosition.y + deltaY;
+        return Mathf.Lerp(transform.position.y, targetPositionY, Time.deltaTime * jumpLerpSpeed);
+    }
+
+    private void StopJump()
+    {
+        IsJumping = false;
+    }
+
+    private void StartRoll()
+    {
+        IsRolling = true;
+        regularCollider.enabled = false;
+        rollCollider.enabled = true;
+        rollStartZ = transform.position.z;
+        StopJump();
     }
 
     private void ProcessRoll()
@@ -124,11 +137,16 @@ public class PlayerController : MonoBehaviour
             float rollPercent = rollCurrentProgress / rollDistanceZ;
             if (rollPercent >= 1)
             {
-                IsRolling = false;
-                regularCollider.enabled = true;
-                rollCollider.enabled = false;
+                StopRoll();
             }
         }
+    }
+
+    private void StopRoll()
+    {
+        IsRolling = false;
+        regularCollider.enabled = true;
+        rollCollider.enabled = false;
     }
 
     public void OnPlayerDeath()

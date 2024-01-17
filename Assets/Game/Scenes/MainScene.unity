@@ -601,7 +601,7 @@ MonoBehaviour:
   laneDistanceX: 1.5
   jumpDistanceZ: 5
   jumpHeightY: 2
-  jumpCancelSpeed: 2
+  jumpLerpSpeed: 10
   regularCollider: {fileID: 576506823}
   rollCollider: {fileID: 1430310316}
   rollDistanceZ: 5
