@@ -4,7 +4,11 @@ using UnityEngine;
 public class EndlessTrackGenerator : MonoBehaviour
 {
     [SerializeField] private TrackSegment[] trackSegments;
+    [SerializeField] private int initialTrackCount = 10;
+
     private List<TrackSegment> currentSegments = new();
+    private int easyTrackIndex = 1;
+    private int hardTrackIndex = 2;
 
     private void Start()
     {
@@ -12,9 +16,10 @@ public class EndlessTrackGenerator : MonoBehaviour
         currentSegments.Add(initialTrack);
         TrackSegment previousTrack = initialTrack;
 
-        foreach (var trackPrefab in trackSegments)
+        for (int i = 0; i < initialTrackCount; i++)
         {
-            TrackSegment currentTrack = Instantiate(trackPrefab, transform);
+            int randomIndex = Random.Range(easyTrackIndex,hardTrackIndex + 1);
+            TrackSegment currentTrack = Instantiate(trackSegments[randomIndex], transform);
 
             currentTrack.transform.position = previousTrack.End.position
                 + (currentTrack.transform.position - currentTrack.Start.position);

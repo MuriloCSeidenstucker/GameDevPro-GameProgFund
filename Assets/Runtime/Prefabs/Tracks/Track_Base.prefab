@@ -122,7 +122,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5560764462531421404, guid: 1d6891bcea344314aa011d885177b780, type: 3}
       propertyPath: m_Name
-      value: Ground_Head
+      value: Ground_1
       objectReference: {fileID: 0}
     - target: {fileID: 8683533294042953453, guid: 1d6891bcea344314aa011d885177b780, type: 3}
       propertyPath: m_LocalPosition.x
@@ -184,7 +184,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5560764462531421404, guid: 1d6891bcea344314aa011d885177b780, type: 3}
       propertyPath: m_Name
-      value: Ground_Tail
+      value: Ground_2
       objectReference: {fileID: 0}
     - target: {fileID: 8683533294042953453, guid: 1d6891bcea344314aa011d885177b780, type: 3}
       propertyPath: m_LocalPosition.x

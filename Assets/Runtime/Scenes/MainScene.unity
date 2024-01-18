@@ -260,10 +260,8 @@ MonoBehaviour:
   trackSegments:
   - {fileID: 2196997208088745273, guid: 62b7504263b2a6d4690ceb1c6940471a, type: 3}
   - {fileID: 7066745016173180073, guid: 6f191c4594c3c3341916808ef0d59f15, type: 3}
-  - {fileID: 7066745016173180073, guid: 5a982195f26468e4b93888167431bc11, type: 3}
   - {fileID: 7066745016173180073, guid: 783a2ade2101e1d46b504a0594328de7, type: 3}
-  - {fileID: 7066745016173180073, guid: 5032d486b2328674d9b9d4ffaa2ed7f1, type: 3}
-  - {fileID: 7066745016173180073, guid: ba5bdefa9defeaa42b30d151db260639, type: 3}
+  initialTrackCount: 10
 --- !u!4 &776329225
 Transform:
   m_ObjectHideFlags: 0
