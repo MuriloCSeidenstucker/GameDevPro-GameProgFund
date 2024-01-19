@@ -9,7 +9,8 @@ public class EndlessTrackGenerator : MonoBehaviour
 
     [Header("Endless Generation Parameters")]
     [SerializeField] private int initialTrackCount = 10;
-    [SerializeField] private int minTracksInFrontPlayer = 3;
+    [SerializeField] private int minTracksInFrontOfPlayer = 3;
+    [SerializeField] private float minDistanceToConsiderInsideTrack = 3f;
 
     private List<TrackSegment> currentSegments = new();
 
@@ -24,17 +25,30 @@ public class EndlessTrackGenerator : MonoBehaviour
         int trackPlayerIndex = -1;
         for (int i = 0; i < currentSegments.Count; i++)
         {
-            if (player.transform.position.z >= currentSegments[i].Start.position.z
-                && player.transform.position.z <= currentSegments[i].End.position.z)
+            TrackSegment track = currentSegments[i];
+            if (player.transform.position.z >= (track.Start.position.z + minDistanceToConsiderInsideTrack) &&
+                player.transform.position.z <= track.End.position.z)
             {
                 trackPlayerIndex = i;
+                break;
             }
         }
 
-        if (currentSegments.Count - (trackPlayerIndex + 1) < minTracksInFrontPlayer)
+        if (trackPlayerIndex < 0) return;
+
+        int tracksInFrontOfPlayer = currentSegments.Count - (trackPlayerIndex + 1);
+        if (tracksInFrontOfPlayer < minTracksInFrontOfPlayer)
         {
-            Debug.Log(currentSegments.Count - (trackPlayerIndex + 1));
+            SpawnTracks(minTracksInFrontOfPlayer - tracksInFrontOfPlayer);
         }
+
+        for (int i = 0; i < trackPlayerIndex; i++)
+        {
+            TrackSegment track = currentSegments[i];
+            Destroy(track.gameObject);
+        }
+
+        currentSegments.RemoveRange(0, trackPlayerIndex);
     }
 
     private void SpawnTracks(int trackCount)
