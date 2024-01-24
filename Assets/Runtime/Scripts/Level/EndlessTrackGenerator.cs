@@ -11,8 +11,14 @@ public class EndlessTrackGenerator : MonoBehaviour
     [SerializeField] private int initialTrackCount = 10;
     [SerializeField] private int minTracksInFrontOfPlayer = 3;
     [SerializeField] private float minDistanceToConsiderInsideTrack = 3f;
+    [SerializeField] [Range(0, 1)] private float levelDifficultyMultiplier = 0.3f;
+    [SerializeField] [Range(0, 10, order = 1)] private int numberOfDifficultTracksForReward = 3;
 
     private List<TrackSegment> currentSegments = new();
+    private int easyTrackIndex = 0;
+    private int hardTrackIndex = 1;
+    private int rewardTrackIndex = 2;
+    private int hardTrackCount;
 
     private void Start()
     {
@@ -21,6 +27,21 @@ public class EndlessTrackGenerator : MonoBehaviour
     }
 
     private void Update()
+    {
+        TrackGeneratorLoop();
+    }
+
+    private void TrackGeneratorLoop()
+    {
+        int trackPlayerIndex = GetTrackIndexFromPlayer();
+        if (trackPlayerIndex < 0) return;
+
+        SpawnTracksInFrontOfPlayer(trackPlayerIndex);
+
+        DespawnTracksBehindOfPlayer(trackPlayerIndex);
+    }
+
+    private int GetTrackIndexFromPlayer()
     {
         int trackPlayerIndex = -1;
         for (int i = 0; i < currentSegments.Count; i++)
@@ -34,20 +55,25 @@ public class EndlessTrackGenerator : MonoBehaviour
             }
         }
 
-        if (trackPlayerIndex < 0) return;
+        return trackPlayerIndex;
+    }
 
+    private void SpawnTracksInFrontOfPlayer(int trackPlayerIndex)
+    {
         int tracksInFrontOfPlayer = currentSegments.Count - (trackPlayerIndex + 1);
         if (tracksInFrontOfPlayer < minTracksInFrontOfPlayer)
         {
             SpawnTracks(minTracksInFrontOfPlayer - tracksInFrontOfPlayer);
         }
+    }
 
+        private void DespawnTracksBehindOfPlayer(int trackPlayerIndex)
+    {
         for (int i = 0; i < trackPlayerIndex; i++)
         {
             TrackSegment track = currentSegments[i];
             Destroy(track.gameObject);
         }
-
         currentSegments.RemoveRange(0, trackPlayerIndex);
     }
 
@@ -59,10 +85,26 @@ public class EndlessTrackGenerator : MonoBehaviour
 
         for (int i = 0; i < trackCount; i++)
         {
-            int randomIndex = Random.Range(0, trackSegments.Length);
+            int randomIndex = ChooseTrackToSpawn();
             TrackSegment randomTrack = trackSegments[randomIndex];
             previousTrack = SpawnTrackSegment(randomTrack, previousTrack);
         }
+    }
+
+    private int ChooseTrackToSpawn()
+    {
+        int index = -1;
+        if (hardTrackCount >= numberOfDifficultTracksForReward)
+        {
+            index = rewardTrackIndex;
+            hardTrackCount = 0;
+        }
+        else
+        {
+            index = Random.value <= levelDifficultyMultiplier ? hardTrackIndex : easyTrackIndex;
+            if (index == hardTrackIndex) hardTrackCount++;
+        }
+        return index;
     }
 
     private TrackSegment SpawnTrackSegment(TrackSegment randomTrack, TrackSegment previousTrack)
