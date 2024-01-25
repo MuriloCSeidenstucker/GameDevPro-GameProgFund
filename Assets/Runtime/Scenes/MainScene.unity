@@ -452,6 +452,10 @@ PrefabInstance:
       propertyPath: gameMode
       value: 
       objectReference: {fileID: 1281328824}
+    - target: {fileID: 4794996074290403049, guid: 95678c75be4e3cc45b992fb207faf0e2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 39d05ea744639c743ac05770ab499ba2, type: 2}
     - target: {fileID: 7541991583249880427, guid: 95678c75be4e3cc45b992fb207faf0e2, type: 3}
       propertyPath: m_Name
       value: Player
