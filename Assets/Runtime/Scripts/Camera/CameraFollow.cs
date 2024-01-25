@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -12,6 +14,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 targetPosition = player.transform.position;
 
         currentPosition.z = targetPosition.z + armZ;
+
         transform.position = currentPosition;
     }
 }

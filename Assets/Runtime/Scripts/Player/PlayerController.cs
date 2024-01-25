@@ -1,74 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool IsDead { get; private set; }
-    public bool IsJumping { get; private set; }
-    public bool IsRolling { get; private set; }
-    public float JumpDuration => jumpDistanceZ / forwardSpeed;
-    public float RollDuration => rollDistanceZ / forwardSpeed;
+    [SerializeField] private float horizontalSpeed = 15;
+    [SerializeField] private float forwardSpeed = 10;
 
-    [SerializeField] private float horizontalSpeed = 15f;
-    [SerializeField] private float forwardSpeed = 10f;
-    [SerializeField] private float laneDistanceX = 1.5f;
+    [SerializeField] private float laneDistanceX = 4;
 
     [Header("Jump")]
-    [SerializeField] private float jumpDistanceZ = 5f;
-    [SerializeField] private float jumpHeightY = 2f;
-    [SerializeField] private float jumpLerpSpeed = 10f;
+    [SerializeField] private float jumpDistanceZ = 5;
+    [SerializeField] private float jumpHeightY = 2;
+
+    [SerializeField] private float jumpLerpSpeed = 10;
 
     [Header("Roll")]
+
+    [SerializeField] private float rollDistanceZ = 5;
     [SerializeField] private Collider regularCollider;
     [SerializeField] private Collider rollCollider;
-    [SerializeField] private float rollDistanceZ = 2f;
 
-    private Vector3 initialPosition;
-    private float jumpStartZ;
+
+    Vector3 initialPosition;
+
+    float targetPositionX;
+
+    public bool IsJumping { get; private set; }
+
     private float rollStartZ;
-    private float targetPositionX;
+    public bool IsRolling { get; private set; }
+
+    public float JumpDuration => jumpDistanceZ / forwardSpeed;
+
+    public float RollDuration => rollDistanceZ / forwardSpeed;
+    float jumpStartZ;
 
     private float LeftLaneX => initialPosition.x - laneDistanceX;
     private float RightLaneX => initialPosition.x + laneDistanceX;
 
-    private void Awake()
+    private bool CanJump => !IsJumping;
+    private bool CanRoll => !IsRolling;
+
+    public float TravelledDistance => Vector3.Distance(transform.position, initialPosition);
+
+    void Awake()
     {
         initialPosition = transform.position;
         StopRoll();
-        enabled = false;
     }
 
-    private void Update()
+    void Update()
     {
-        if (!IsDead)
-        {
-            ProcessInput();
-        }
+        ProcessInput();
 
-        Vector3 currentPosition = transform.position;
+        Vector3 position = transform.position;
 
-        currentPosition.x = ProcessLaneMovement();
-        currentPosition.y = ProcessJump();
-        currentPosition.z = ProcessForwardMovement();
+        position.x = ProcessLaneMovement();
+        position.y = ProcessJump();
+        position.z = ProcessForwardMovement();
         ProcessRoll();
 
-        transform.position = currentPosition;
+        transform.position = position;
     }
 
     private void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            targetPositionX -= laneDistanceX;
-        }
         if (Input.GetKeyDown(KeyCode.D))
         {
             targetPositionX += laneDistanceX;
         }
-        if (Input.GetKeyDown(KeyCode.W) && !IsJumping)
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            targetPositionX -= laneDistanceX;
+        }
+        if (Input.GetKeyDown(KeyCode.W) && CanJump)
         {
             StartJump();
         }
-        if (Input.GetKeyDown(KeyCode.S) && !IsRolling)
+        if (Input.GetKeyDown(KeyCode.S) && CanRoll)
         {
             StartRoll();
         }
@@ -76,14 +86,14 @@ public class PlayerController : MonoBehaviour
         targetPositionX = Mathf.Clamp(targetPositionX, LeftLaneX, RightLaneX);
     }
 
+    private float ProcessLaneMovement()
+    {
+        return Mathf.Lerp(transform.position.x, targetPositionX, Time.deltaTime * horizontalSpeed);
+    }
+
     private float ProcessForwardMovement()
     {
         return transform.position.z + forwardSpeed * Time.deltaTime;
-    }
-
-    private float ProcessLaneMovement()
-    {
-        return Mathf.Lerp(transform.position.x, targetPositionX, horizontalSpeed * Time.deltaTime);
     }
 
     private void StartJump()
@@ -93,9 +103,14 @@ public class PlayerController : MonoBehaviour
         StopRoll();
     }
 
+    private void StopJump()
+    {
+        IsJumping = false;
+    }
+
     private float ProcessJump()
     {
-        float deltaY = 0f;
+        float deltaY = 0;
         if (IsJumping)
         {
             float jumpCurrentProgress = transform.position.z - jumpStartZ;
@@ -109,36 +124,30 @@ public class PlayerController : MonoBehaviour
                 deltaY = Mathf.Sin(Mathf.PI * jumpPercent) * jumpHeightY;
             }
         }
-
         float targetPositionY = initialPosition.y + deltaY;
         return Mathf.Lerp(transform.position.y, targetPositionY, Time.deltaTime * jumpLerpSpeed);
-    }
-
-    private void StopJump()
-    {
-        IsJumping = false;
-    }
-
-    private void StartRoll()
-    {
-        IsRolling = true;
-        regularCollider.enabled = false;
-        rollCollider.enabled = true;
-        rollStartZ = transform.position.z;
-        StopJump();
     }
 
     private void ProcessRoll()
     {
         if (IsRolling)
         {
-            float rollCurrentProgress = transform.position.z - rollStartZ;
-            float rollPercent = rollCurrentProgress / rollDistanceZ;
-            if (rollPercent >= 1)
+            float percent = (transform.position.z - rollStartZ) / rollDistanceZ;
+            if (percent >= 1)
             {
                 StopRoll();
             }
         }
+    }
+
+    private void StartRoll()
+    {
+        rollStartZ = transform.position.z;
+        IsRolling = true;
+        regularCollider.enabled = false;
+        rollCollider.enabled = true;
+
+        StopJump();
     }
 
     private void StopRoll()
@@ -148,10 +157,9 @@ public class PlayerController : MonoBehaviour
         rollCollider.enabled = false;
     }
 
-    public void OnPlayerDeath()
+    public void Die()
     {
-        IsDead = true;
-        forwardSpeed = 0f;
+        forwardSpeed = 0;
         StopRoll();
         StopJump();
     }

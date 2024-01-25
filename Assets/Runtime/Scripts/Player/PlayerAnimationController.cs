@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -14,13 +16,12 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Update()
     {
-        if (player.IsDead) return;
         animator.SetBool(PlayerAnimationConstants.IsJumping, player.IsJumping);
         animator.SetBool(PlayerAnimationConstants.IsRolling, player.IsRolling);
     }
 
-    public void OnPlayerDeath()
+    public void Die()
     {
-        animator.SetTrigger(PlayerAnimationConstants.OnDeath);
+        animator.SetTrigger(PlayerAnimationConstants.DieTrigger);
     }
 }

@@ -1,9 +1,9 @@
 public static class PlayerAnimationConstants
 {
-    public static string JumpMultiplier = "JumpMultiplier";
-    public static string RollMultiplier = "RollMultiplier";
-    public static string IsJumping = "IsJumping";
-    public static string IsRolling = "IsRolling";
-    public static string StartRun = "StartRun";
-    public static string OnDeath = "OnDeath";
+    public const string JumpMultiplier = "JumpMultiplier";
+    public const string IsJumping = "IsJumping";
+    public const string StartGameTrigger = "StartGameTrigger";
+    public const string DieTrigger = "Die";
+    public const string IsRolling = "IsRolling";
+    public const string RollSpeedMultiplier = "RollMultiplier";
 }
