@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameMode gameMode;
     [SerializeField] private float horizontalSpeed = 15;
     [SerializeField] private float forwardSpeed = 10;
 
@@ -45,16 +46,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float baseScoreMultiplier = 1f;
     private float score;
     public int Score => Mathf.RoundToInt(score);
+    private float travelledDistance;
+    public int TravelledDistance => Mathf.RoundToInt(travelledDistance);
 
     void Awake()
     {
         initialPosition = transform.position;
         StopRoll();
+        enabled = false;
     }
 
     void Update()
     {
-        ProcessInput();
+        if (!gameMode.IsGamePaused)
+        {
+            ProcessInput();
+        }
 
         Vector3 position = transform.position;
 
@@ -66,6 +73,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         score += baseScoreMultiplier * forwardSpeed * Time.deltaTime;
+        travelledDistance += forwardSpeed * Time.deltaTime;
     }
 
     private void ProcessInput()
