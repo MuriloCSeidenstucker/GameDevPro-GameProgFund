@@ -1,39 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameMode : MonoBehaviour
 {
-    [SerializeField] private GameObject mainHUD;
-    [SerializeField] private GameObject pauseHUD;
     [SerializeField] private float reloadGameDelay = 3;
 
     public bool IsGamePaused { get; private set; }
-
-    private void Awake()
-    {
-        EnableMainHUD();
-    }
-
-    public void PauseGame()
-    {
-        Time.timeScale = 0;
-        IsGamePaused = true;
-        EnablePauseHUD();
-    }
-
-    public void ResumeGame()
-    {
-        Time.timeScale = 1;
-        IsGamePaused = false;
-        EnableMainHUD();
-    }
-
-    public void OnGameOver()
-    {
-        StartCoroutine(ReloadGameCoroutine());
-    }
 
     private IEnumerator ReloadGameCoroutine()
     {
@@ -42,15 +15,20 @@ public class GameMode : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void EnableMainHUD()
+    public void PauseGame()
     {
-        mainHUD.SetActive(true);
-        pauseHUD.SetActive(false);
+        Time.timeScale = 0;
+        IsGamePaused = true;
     }
 
-    private void EnablePauseHUD()
+    public void ResumeGame()
     {
-        mainHUD.SetActive(false);
-        pauseHUD.SetActive(true);
+        Time.timeScale = 1;
+        IsGamePaused = false;
+    }
+
+    public void OnGameOver()
+    {
+        StartCoroutine(ReloadGameCoroutine());
     }
 }

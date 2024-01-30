@@ -46,8 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float baseScoreMultiplier = 1f;
     private float score;
     public int Score => Mathf.RoundToInt(score);
-    private float travelledDistance;
-    public int TravelledDistance => Mathf.RoundToInt(travelledDistance);
+    public float TravelledDistance => transform.position.z - initialPosition.z;
 
     void Awake()
     {
@@ -73,7 +72,6 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         score += baseScoreMultiplier * forwardSpeed * Time.deltaTime;
-        travelledDistance += forwardSpeed * Time.deltaTime;
     }
 
     private void ProcessInput()
