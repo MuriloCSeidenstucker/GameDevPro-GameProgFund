@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -23,5 +21,10 @@ public class PlayerAnimationController : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger(PlayerAnimationConstants.DieTrigger);
+    }
+
+    public void StartGameAnim()
+    {
+        animator.SetTrigger(PlayerAnimationConstants.StartGameTrigger);
     }
 }

@@ -4,15 +4,32 @@ using UnityEngine.SceneManagement;
 
 public class GameMode : MonoBehaviour
 {
-    [SerializeField] private float reloadGameDelay = 3;
+    [SerializeField] private PlayerAnimationController playerAnim;
+    [SerializeField] private float reloadGameDelay = 3f;
+    [SerializeField] private float countdownTime = 3f;
 
+    public float CountdownTime => countdownTime;
     public bool IsGamePaused { get; private set; }
+    public bool IsGameStarting { get; private set; }
 
     private IEnumerator ReloadGameCoroutine()
     {
         //esperar uma frame
         yield return new WaitForSeconds(reloadGameDelay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private IEnumerator StartGameCor(float time)
+    {
+        yield return new WaitForSeconds(time);
+        playerAnim.StartGameAnim();
+        IsGameStarting = false;
+    }
+
+    public void StartGame()
+    {
+        IsGameStarting = true;
+        StartCoroutine(StartGameCor(countdownTime));
     }
 
     public void PauseGame()
