@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMode : MonoBehaviour
 {
+    [SerializeField] private PlayerController player;
     [SerializeField] private PlayerAnimationController playerAnim;
     [SerializeField] private float reloadGameDelay = 3f;
     [SerializeField] private float countdownTime = 3f;
@@ -11,6 +12,11 @@ public class GameMode : MonoBehaviour
     public float CountdownTime => countdownTime;
     public bool IsGamePaused { get; private set; }
     public bool IsGameStarting { get; private set; }
+
+    private void Awake()
+    {
+        player.enabled = false;
+    }
 
     private IEnumerator ReloadGameCoroutine()
     {

@@ -40,16 +40,17 @@ public class MainHUD : MonoBehaviour
         {
             countdownText.gameObject.SetActive(true);
             int countdown = (int)(countdownTime -= Time.deltaTime);
+            text = $"{countdown+1}";
+
             if (lastCountdown != countdown)
             {
-                countdownText.gameObject.transform.localScale = Vector3.one;
+                countdownText.transform.localScale = Vector3.one;
                 lastCountdown = countdown;
             }
-            Vector3 scale = countdownText.gameObject.transform.localScale;
+            Vector3 scale = countdownText.transform.localScale;
             float t = countdownTime - countdown;
             int maxScale = 5;
-            countdownText.gameObject.transform.localScale = Vector3.Lerp(scale, Vector3.one * maxScale, t * Time.deltaTime);
-            text = $"{countdown+1}";
+            countdownText.transform.localScale = Vector3.Lerp(scale, Vector3.one * maxScale, t * Time.deltaTime);
         }
         else
         {
