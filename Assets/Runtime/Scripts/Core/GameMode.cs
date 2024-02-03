@@ -6,6 +6,7 @@ public class GameMode : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayerAnimationController playerAnim;
+    [SerializeField] private MusicPlayer musicPlayer;
     [SerializeField] private float reloadGameDelay = 3f;
     [SerializeField] private float countdownTime = 3f;
 
@@ -16,6 +17,7 @@ public class GameMode : MonoBehaviour
     private void Awake()
     {
         player.enabled = false;
+        musicPlayer.PlayStartMenuMusic();
     }
 
     private IEnumerator ReloadGameCoroutine()
@@ -27,6 +29,7 @@ public class GameMode : MonoBehaviour
 
     private IEnumerator StartGameCor(float time)
     {
+        musicPlayer.PlayMainTrackMusic();
         yield return new WaitForSeconds(time);
         playerAnim.StartGameAnim();
         IsGameStarting = false;
