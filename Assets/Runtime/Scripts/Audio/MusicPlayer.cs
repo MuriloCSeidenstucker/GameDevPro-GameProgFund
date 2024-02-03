@@ -7,7 +7,7 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField] private AudioClip mainTrackMusic;
 
     private AudioSource audioSource;
-    private AudioSource AudioSrc => audioSource is null ? audioSource = GetComponent<AudioSource>() : audioSource;
+    private AudioSource AudioSrc => audioSource == null ? audioSource = GetComponent<AudioSource>() : audioSource;
 
     private void PlayMusic(AudioClip clip)
     {
