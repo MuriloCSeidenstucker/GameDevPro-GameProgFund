@@ -8,6 +8,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainHUD, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935051543588784606, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3425551111755285798, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -34,11 +58,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3425551111755285798, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 487.9545
       objectReference: {fileID: 0}
     - target: {fileID: 3425551111755285798, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 130
+      value: 174.9851
       objectReference: {fileID: 0}
     - target: {fileID: 3425551111755285798, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_LocalPosition.x
@@ -90,7 +114,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3442570088639225960, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_text
-      value: PAUSED
+      value: RESUME
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442570088639225960, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_fontSize
+      value: 95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442570088639225960, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 95
       objectReference: {fileID: 0}
     - target: {fileID: 7015174572676001899, guid: 0b1ec1e40c6779e40acb5d7a99bbbf94, type: 3}
       propertyPath: m_Name

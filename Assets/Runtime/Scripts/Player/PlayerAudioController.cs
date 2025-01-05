@@ -7,13 +7,11 @@ public class PlayerAudioController : MonoBehaviour
     [SerializeField] private AudioClip rollSFX;
 
     private AudioSource audioSource;
-    private AudioSource AudioSrc => audioSource is null ? audioSource = GetComponent<AudioSource>() : audioSource;
+    private AudioSource AudioSource => audioSource is null ? audioSource = GetComponent<AudioSource>() : audioSource;
 
     private void PlaySFX(AudioClip clip)
     {
-        AudioSrc.clip = clip;
-        AudioSrc.loop = false;
-        AudioSrc.Play();
+        AudioUtility.PlayAudioCue(AudioSource, clip);
     }
 
     public void PlayJumpSFX() => PlaySFX(jumpSFX);

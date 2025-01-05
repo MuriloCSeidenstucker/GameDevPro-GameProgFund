@@ -8,21 +8,25 @@ public class GameMode : MonoBehaviour
     [SerializeField] private PlayerAnimationController playerAnim;
     [SerializeField] private MusicPlayer musicPlayer;
     [SerializeField] private float reloadGameDelay = 3f;
+    [SerializeField] private float startGameOverMusicDelay = 0.3f;
     [SerializeField] private float countdownTime = 3f;
 
     public float CountdownTime => countdownTime;
     public bool IsGamePaused { get; private set; }
     public bool IsGameStarting { get; private set; }
+    public bool IsGameOver { get; private set; }
 
     private void Awake()
     {
+        IsGameOver = false;
         player.enabled = false;
         musicPlayer.PlayStartMenuMusic();
     }
 
     private IEnumerator ReloadGameCoroutine()
     {
-        //esperar uma frame
+        yield return new WaitForSeconds(startGameOverMusicDelay);
+        musicPlayer.PlayGameOverTrackMusic();
         yield return new WaitForSeconds(reloadGameDelay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -33,6 +37,7 @@ public class GameMode : MonoBehaviour
         yield return new WaitForSeconds(time);
         playerAnim.StartGameAnim();
         IsGameStarting = false;
+        IsGameOver = false;
     }
 
     public void StartGame()
@@ -55,6 +60,7 @@ public class GameMode : MonoBehaviour
 
     public void OnGameOver()
     {
+        IsGameOver = true;
         StartCoroutine(ReloadGameCoroutine());
     }
 }

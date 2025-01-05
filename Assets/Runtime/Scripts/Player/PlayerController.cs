@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessInput()
     {
+        if (gameMode.IsGameOver) return;
+
         if (Input.GetKeyDown(KeyCode.D))
         {
             targetPositionX += laneDistanceX;
