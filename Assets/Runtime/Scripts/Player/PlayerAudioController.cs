@@ -9,6 +9,14 @@ public class PlayerAudioController : MonoBehaviour
     private AudioSource audioSource;
     private AudioSource AudioSource => audioSource is null ? audioSource = GetComponent<AudioSource>() : audioSource;
 
+    void Start()
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
+
     private void PlaySFX(AudioClip clip)
     {
         AudioUtility.PlayAudioCue(AudioSource, clip);

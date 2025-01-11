@@ -30,7 +30,7 @@ public class MainHUD : MonoBehaviour
 
     private void LateUpdate()
     {
-        scoreText.text = $"SCORE : {player.Score}";
+        scoreText.text = $"SCORE : {gameMode.Score}";
         travelledDistanceText.text = $"{Mathf.RoundToInt(player.TravelledDistance)} m";
         if (gameMode.IsGameStarting)
         {

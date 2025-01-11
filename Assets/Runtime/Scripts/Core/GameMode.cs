@@ -4,23 +4,56 @@ using UnityEngine.SceneManagement;
 
 public class GameMode : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayerAnimationController playerAnim;
+
+    [Header("UI")]
     [SerializeField] private MusicPlayer musicPlayer;
+
+    [Header("Gameplay")]
+    [SerializeField] private float startPlayerSpeed = 10f;
+    [SerializeField] private float maxPlayerSpeed = 17f;
+    [SerializeField] private float timeToMaxSpeedSeconds = 300f;
     [SerializeField] private float reloadGameDelay = 3f;
-    [SerializeField] private float startGameOverMusicDelay = 0.3f;
-    [SerializeField] private float countdownTime = 3f;
+    [Range(0, 5, order = 1)]
+    [SerializeField] private int countdownTime = 3;
+
+    [Header("Score")]
+    [SerializeField] private float baseScoreMultiplier = 1f;
+    private float score;
+    public int Score => Mathf.RoundToInt(score);
 
     public float CountdownTime => countdownTime;
     public bool IsGamePaused { get; private set; }
     public bool IsGameStarting { get; private set; }
     public bool IsGameOver { get; private set; }
 
+    private float startGameOverMusicDelay = 0.3f;
+    private float startGameTime;
+
     private void Awake()
     {
         IsGameOver = false;
         player.enabled = false;
         musicPlayer.PlayStartMenuMusic();
+    }
+
+    private void Update()
+    {
+        if (player.enabled == false && playerAnim.IsGameStartAnimFinished == true)
+        {
+            player.ForwardSpeed = startPlayerSpeed;
+            player.enabled = true;
+            startGameTime = Time.time;
+        }
+
+        if (player.enabled && !IsGameOver)
+        {
+            score += baseScoreMultiplier * player.ForwardSpeed * Time.deltaTime;
+            float timePercent = (Time.time - startGameTime) / timeToMaxSpeedSeconds;
+            player.ForwardSpeed = Mathf.Lerp(startPlayerSpeed, maxPlayerSpeed, timePercent);
+        }
     }
 
     private IEnumerator ReloadGameCoroutine()

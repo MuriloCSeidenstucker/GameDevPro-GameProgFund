@@ -5,8 +5,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAudioController audioController;
     [SerializeField] private GameMode gameMode;
     [SerializeField] private float horizontalSpeed = 15;
-    [SerializeField] private float forwardSpeed = 10;
-
     [SerializeField] private float laneDistanceX = 4;
 
     [Header("Jump")]
@@ -31,9 +29,9 @@ public class PlayerController : MonoBehaviour
     private float rollStartZ;
     public bool IsRolling { get; private set; }
 
-    public float JumpDuration => jumpDistanceZ / forwardSpeed;
+    public float JumpDuration => jumpDistanceZ / ForwardSpeed;
 
-    public float RollDuration => rollDistanceZ / forwardSpeed;
+    public float RollDuration => rollDistanceZ / ForwardSpeed;
     float jumpStartZ;
 
     private float LeftLaneX => initialPosition.x - laneDistanceX;
@@ -42,10 +40,8 @@ public class PlayerController : MonoBehaviour
     private bool CanJump => !IsJumping;
     private bool CanRoll => !IsRolling;
 
-    [SerializeField] private float baseScoreMultiplier = 1f;
-    private float score;
-    public int Score => Mathf.RoundToInt(score);
     public float TravelledDistance => transform.position.z - initialPosition.z;
+    public float ForwardSpeed;
 
     void Awake()
     {
@@ -69,8 +65,6 @@ public class PlayerController : MonoBehaviour
         ProcessRoll();
 
         transform.position = position;
-
-        score += baseScoreMultiplier * forwardSpeed * Time.deltaTime;
     }
 
     private void ProcessInput()
@@ -104,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     private float ProcessForwardMovement()
     {
-        return transform.position.z + forwardSpeed * Time.deltaTime;
+        return transform.position.z + ForwardSpeed * Time.deltaTime;
     }
 
     private void StartJump()
@@ -172,8 +166,10 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        forwardSpeed = 0;
-        StopRoll();
-        StopJump();
+        ForwardSpeed = 0;
+        IsJumping = false;
+        IsRolling = false;
+        rollCollider.enabled= false;
+        regularCollider.enabled = false;
     }
 }
