@@ -754,6 +754,10 @@ PrefabInstance:
       propertyPath: gameMode
       value: 
       objectReference: {fileID: 811025702}
+    - target: {fileID: 1039976784133768168, guid: 740e8ed84f438b24ca8b6f85b7659234, type: 3}
+      propertyPath: animController
+      value: 
+      objectReference: {fileID: 1075213834}
     - target: {fileID: 1039976784133768169, guid: 740e8ed84f438b24ca8b6f85b7659234, type: 3}
       propertyPath: m_Name
       value: Player
@@ -849,7 +853,19 @@ PrefabInstance:
       objectReference: {fileID: 1202507996}
     - target: {fileID: 5473261710550771336, guid: 13e6af26070c6914283530aa501293e8, type: 3}
       propertyPath: countdownTime
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473261710550771336, guid: 13e6af26070c6914283530aa501293e8, type: 3}
+      propertyPath: startPlayerSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473261710550771336, guid: 13e6af26070c6914283530aa501293e8, type: 3}
+      propertyPath: baseScoreMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473261710550771336, guid: 13e6af26070c6914283530aa501293e8, type: 3}
+      propertyPath: timeToMaxSpeedSeconds
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5473261710550771337, guid: 13e6af26070c6914283530aa501293e8, type: 3}
       propertyPath: m_Name
