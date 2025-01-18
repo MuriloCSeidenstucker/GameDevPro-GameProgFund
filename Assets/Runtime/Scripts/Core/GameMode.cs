@@ -24,6 +24,7 @@ public class GameMode : MonoBehaviour
     private float score;
     public int Score => Mathf.RoundToInt(score);
 
+    public int CollectedPickups { get; private set; }
     public float CountdownTime => countdownTime;
     public bool IsGamePaused { get; private set; }
     public bool IsGameStarting { get; private set; }
@@ -96,4 +97,6 @@ public class GameMode : MonoBehaviour
         IsGameOver = true;
         StartCoroutine(ReloadGameCoroutine());
     }
+
+    public void CollectPickup() => CollectedPickups++;
 }
