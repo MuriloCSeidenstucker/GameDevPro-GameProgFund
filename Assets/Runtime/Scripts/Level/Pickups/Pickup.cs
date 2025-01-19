@@ -6,7 +6,6 @@ public class Pickup : MonoBehaviour
     [SerializeField] private GameObject graphics;
     [SerializeField] private AudioClip pickupSFX;
 
-    // private GameMode gameMode;
     private AudioSource audioSource;
     private float selfDestructionTime => pickupSFX.length;
     private bool wasCollected;
@@ -27,7 +26,6 @@ public class Pickup : MonoBehaviour
 
     private void WhenCollecting()
     {
-        // gameMode.CollectPickup();
         AudioUtility.PlayAudioCue(audioSource, pickupSFX);
         graphics.SetActive(false);
         wasCollected = true;
