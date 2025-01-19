@@ -13,7 +13,6 @@ public class PlayerCollision : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         animationController = GetComponent<PlayerAnimationController>();
-        Debug.Log(gameMode.CollectedPickups);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +30,6 @@ public class PlayerCollision : MonoBehaviour
         if (pickup != null && pickup != lastPickup)
         {
             gameMode.CollectPickup();
-            Debug.Log(gameMode.CollectedPickups);
             lastPickup = pickup;
         }
     }
