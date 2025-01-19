@@ -22,16 +22,15 @@ public class Pickup : MonoBehaviour
         var player = other.GetComponentInParent<PlayerController>();
         if (player)
         {
-            StartCoroutine(OnHitCoroutine());
+            WhenCollecting();
         }
     }
 
-    private IEnumerator OnHitCoroutine()
+    private void WhenCollecting()
     {
         // gameMode.CollectPickup();
         AudioUtility.PlayAudioCue(audioSource, pickupSFX);
         graphics.SetActive(false);
-        yield return new WaitForSeconds(selfDestructionTime);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, selfDestructionTime);
     }
 }
