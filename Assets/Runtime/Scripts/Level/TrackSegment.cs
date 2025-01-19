@@ -7,7 +7,8 @@ public class TrackSegment : MonoBehaviour
     [SerializeField] private Transform end;
 
     [SerializeField] private ObstacleSpawner[] obstacleSpawners;
-    [SerializeField] DecorationSpawner decorationSpawner;
+    [SerializeField] private PickupSpawner[] pickupSpawners;
+    [SerializeField] private DecorationSpawner decorationSpawner;
 
     public Transform Start => start;
     public Transform End => end;
@@ -16,5 +17,6 @@ public class TrackSegment : MonoBehaviour
     public float SqrLength => (End.position - Start.position).sqrMagnitude;
 
     public ObstacleSpawner[] ObstacleSpawners => obstacleSpawners;
+    public PickupSpawner[] PickupSpawners => pickupSpawners;
     public DecorationSpawner DecorationSpawner => decorationSpawner;
 }

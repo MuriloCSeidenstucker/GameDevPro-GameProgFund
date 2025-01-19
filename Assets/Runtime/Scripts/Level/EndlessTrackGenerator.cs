@@ -9,6 +9,7 @@ public class EndlessTrackGenerator : MonoBehaviour
     [SerializeField] private TrackSegment[] hardTrackPrefabs;
     [SerializeField] private TrackSegment[] rewardTrackPrefabs;
 
+
     [Header("Endless Generation Parameters")]
     [SerializeField] private int initialTrackCount = 5;
     [SerializeField] private int minTracksInFrontOfPlayer = 3;
@@ -23,6 +24,13 @@ public class EndlessTrackGenerator : MonoBehaviour
     [SerializeField] private int maxTracksBeforeReward = 20;
     [SerializeField] private int minRewardTrackCount = 1;
     [SerializeField] private int maxRewardTrackCount = 3;
+
+    [Header("Pickup Parameters")]
+    [SerializeField] private int pickupAmount = 5;
+    [Range(1f, 7f)]
+    [SerializeField] private float distanceBetweenPickups = 4f;
+    [Range(0f, 1f)]
+    [SerializeField] private float pickupSpawnChance = 0.5f;
 
     private List<TrackSegment> currentSegments = new List<TrackSegment>();
 
@@ -120,6 +128,13 @@ public class EndlessTrackGenerator : MonoBehaviour
         foreach (var obstacleSpawner in trackInstance.ObstacleSpawners)
         {
             obstacleSpawner.SpawnObstacle();
+        }
+
+        if (Random.value <= pickupSpawnChance && previousTrack != null)
+        {
+            int randomIndex = Random.Range(0, trackInstance.PickupSpawners.Length);
+            PickupSpawner chosenSpawner = trackInstance.PickupSpawners[randomIndex];
+            chosenSpawner.SpawnPickups(pickupAmount, new Vector3(0, 0, distanceBetweenPickups), centralizedSpawn: true);
         }
 
         trackInstance.DecorationSpawner.SpawnDecorations();
