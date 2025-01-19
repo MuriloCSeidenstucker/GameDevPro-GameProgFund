@@ -13,6 +13,18 @@ PrefabInstance:
       value: cherries
       objectReference: {fileID: 0}
     - target: {fileID: 4785770825739254, guid: 8f38e57a49b1c844081ad6bb3c553f13, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785770825739254, guid: 8f38e57a49b1c844081ad6bb3c553f13, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785770825739254, guid: 8f38e57a49b1c844081ad6bb3c553f13, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785770825739254, guid: 8f38e57a49b1c844081ad6bb3c553f13, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -117,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2197302453915457418, guid: 5714552d96d18954084e47593531e2a1, type: 3}
       propertyPath: m_Name
-      value: Pickup Variant
+      value: CherryPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 6039465527837168988, guid: 5714552d96d18954084e47593531e2a1, type: 3}
       propertyPath: graphics
