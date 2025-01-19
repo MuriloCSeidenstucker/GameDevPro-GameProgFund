@@ -16,6 +16,7 @@ public class MainHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI travelledDistanceText;
     [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private TextMeshProUGUI pickupText;
 
     private UIAudioController audioController;
     private float countdownTime;
@@ -36,6 +37,8 @@ public class MainHUD : MonoBehaviour
         {
             countdownText.text = UpdateCountdownText();
         }
+
+        pickupText.text = gameMode.CollectedPickups.ToString();
     }
 
     private string UpdateCountdownText()
